@@ -31,15 +31,15 @@ RUN apk -U add \
         libplist-dev \
         libgcrypt-dev
         
- ##### ALAC #####
- RUN git clone https://github.com/mikebrady/alac
- WORKDIR /alac
- RUN autoreconf -fi \
- && ./configure \
- && make \
- && make install
- WORKDIR /
- ##### ALAC END #####
+#  ##### ALAC #####
+#  RUN git clone https://github.com/mikebrady/alac
+#  WORKDIR /alac
+#  RUN autoreconf -fi \
+#  && ./configure \
+#  && make \
+#  && make install
+#  WORKDIR /
+#  ##### ALAC END #####
 
  ##### NQPTP #####
  RUN git clone --branch development https://github.com/mikebrady/nqptp
@@ -63,8 +63,6 @@ RUN apk -U add \
         --with-soxr \
         --with-metadata \
         --with-airplay-2 \
-        --with-apple-alac \
-        --with-convolution \
  && make \
  && make install \
  && cd / \
