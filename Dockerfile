@@ -37,7 +37,7 @@ RUN apk -U add \
  RUN autoreconf -fi \
  && ./configure \
  && make \
- & make install
+ && make install
  WORKDIR /
  ##### ALAC END #####
 
