@@ -31,15 +31,15 @@ RUN apk -U add \
         libplist-dev \
         libgcrypt-dev
         
-#  ##### ALAC #####
-#  RUN git clone https://github.com/mikebrady/alac
-#  WORKDIR /alac
-#  RUN autoreconf -fi \
-#  && ./configure \
-#  && make \
-#  && make install
-#  WORKDIR /
-#  ##### ALAC END #####
+ ##### ALAC #####
+ RUN git clone https://github.com/mikebrady/alac
+ WORKDIR /alac
+ RUN autoreconf -fi \
+ && ./configure \
+ && make \
+ && make install
+ WORKDIR /
+ ##### ALAC END #####
 
  ##### NQPTP #####
  RUN git clone --branch development https://github.com/mikebrady/nqptp
@@ -56,6 +56,7 @@ RUN apk -U add \
  && cd shairport-sync \
  && autoreconf -i -f \
  && ./configure \
+        --sysconfdir=/etc \
         --with-alsa \
         --with-pipe \
         --with-avahi \
@@ -63,6 +64,11 @@ RUN apk -U add \
         --with-soxr \
         --with-metadata \
         --with-airplay-2 \
+        --with-dbus-interface \
+        --with-stdout \
+        --with-mpris-interface \
+        --with-apple-alac \
+        --with-convolution \
  && make \
  && make install \
  && cd / \
@@ -97,6 +103,18 @@ RUN apk -U add \
 
 # Copy root filesystem
 COPY rootfs /
+
+# Create non-root user for running the container -- running as the user 'shairport-sync' also allows
+# Shairport Sync to provide the D-Bus and MPRIS interfaces within the container
+
+RUN addgroup shairport-sync 
+RUN adduser -D shairport-sync -G shairport-sync
+
+# Add the shairport-sync user to the pre-existing audio group, which has ID 29, for access to the ALSA stuff
+RUN addgroup -g 29 docker_audio && addgroup shairport-sync docker_audio && addgroup shairport-sync audio
+
+# Remove anything we don't need.
+RUN rm -rf /lib/apk/db/*
 
 # Build arguments
 ARG BUILD_ARCH
