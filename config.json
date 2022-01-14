@@ -2,7 +2,7 @@
   "name": "Shairport Sync",
   "version": "0.0.4",
   "slug": "shairport_sync",
-  "description": "Shairport Sync for Hass.io",
+  "description": "Shairport Sync for Home Assistant",
   "url": "https://github.com/lapy/addon-shairport-sync",
   "startup": "application",
   "arch": [
@@ -12,10 +12,26 @@
     "armv7",
     "i386"
   ],
+  "ports": [
+    "3688/tcp": 3688,
+    "6600/tcp": 6600,
+    "5353/tcp": 5353,
+    "3689/tcp": 3689,
+    "3690/udp": 3690,
+    "3691/udp": 3691
+  ],
+  "ports_description": [
+    "3688/tcp": "Websockets",
+    "6600/tcp": "MPD",
+    "5353/tcp": "Avahi",
+    "3689/tcp": "DAAP",
+    "3690/udp": "Control port - Airplay",
+    "3691/udp": "Timing port - Airplay"
+  ],
   "boot": "auto",
-  "hassio_api": true,
-  "homeassistant_api": true,
-  "host_network": true,
+  "hassio_api": false,
+  "homeassistant_api": false,
+  "host_network": false,
   "hassio_role": "default",
   "privileged": [],
   "audio": true,
