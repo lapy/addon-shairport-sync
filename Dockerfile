@@ -12,24 +12,53 @@ RUN apk -U add \
         autoconf \
         automake \
         libtool \
+        dbus \
         alsa-lib-dev \
-        libdaemon-dev \
         popt-dev \
-        libressl-dev \
+        mbedtls-dev \
         soxr-dev \
         avahi-dev \
         libconfig-dev \
- && cd /root \
- && git clone --branch unstable-development https://github.com/mikebrady/shairport-sync.git \
+        libsndfile-dev \
+        mosquitto-dev \
+        xmltoman \
+        openssh-client \
+        libsodium-dev \
+        ffmpeg-dev \
+        xxd \
+        libressl-dev \
+        openssl-dev \
+        libplist-dev \
+        libgcrypt-dev
+        
+ ##### ALAC #####
+ RUN git clone https://github.com/mikebrady/alac
+ WORKDIR /alac
+ RUN autoreconf -fi \
+ && ./configure \
+ && make \
+ & make install
+ WORKDIR /
+ ##### ALAC END #####
+
+ ##### NQPTP #####
+ RUN git clone --branch development https://github.com/mikebrady/nqptp
+ WORKDIR /nqptp
+ && autoreconf -fi \
+ && ./configure \
+ && make \
+ && make install
+ WORKDIR /
+ ##### NQPTP END #####
+
+ RUN cd /root \
+ && git clone --branch development https://github.com/mikebrady/shairport-sync.git \
  && cd shairport-sync \
  && autoreconf -i -f \
- && ./configure \
-        --with-alsa \
-        --with-pipe \
-        --with-avahi \
-        --with-ssl=openssl \
-        --with-soxr \
-        --with-metadata \
+ && ./configure --sysconfdir=/etc --with-alsa --with-soxr --with-avahi --with-ssl=openssl --with-airplay-2 \
+        --with-metadata --with-dummy --with-pipe --with-dbus-interface \
+        --with-stdout --with-mpris-interface --with-mqtt-client \
+        --with-apple-alac --with-convolution \
  && make \
  && make install \
  && cd / \
