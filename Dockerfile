@@ -55,10 +55,16 @@ RUN apk -U add \
  && git clone --branch development https://github.com/mikebrady/shairport-sync.git \
  && cd shairport-sync \
  && autoreconf -i -f \
- && ./configure --sysconfdir=/etc --with-alsa --with-soxr --with-avahi --with-ssl=openssl --with-airplay-2 \
-        --with-metadata --with-dummy --with-pipe --with-dbus-interface \
-        --with-stdout --with-mpris-interface --with-mqtt-client \
-        --with-apple-alac --with-convolution \
+ && ./configure \
+        --with-alsa \
+        --with-pipe \
+        --with-avahi \
+        --with-ssl=openssl \
+        --with-soxr \
+        --with-metadata \
+        --with-airplay-2 \
+        --with-apple-alac \
+        --with-convolution \
  && make \
  && make install \
  && cd / \
