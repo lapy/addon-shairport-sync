@@ -44,7 +44,7 @@ RUN apk -U add \
  ##### NQPTP #####
  RUN git clone --branch development https://github.com/mikebrady/nqptp
  WORKDIR /nqptp
- && autoreconf -fi \
+ RUN autoreconf -fi \
  && ./configure \
  && make \
  && make install
