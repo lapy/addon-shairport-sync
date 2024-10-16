@@ -1,6 +1,6 @@
 {
 	"name": "Shairport Sync",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"slug": "shairport_sync",
 	"description": "Shairport Sync for Home Assistant",
 	"url": "https://github.com/lapy/addon-shairport-sync",
