@@ -40,5 +40,6 @@
 	},
 	"environment": {
 		"LOG_FORMAT": "{LEVEL}: {MESSAGE}"
-	}
+	},
+	"init": false
 }
